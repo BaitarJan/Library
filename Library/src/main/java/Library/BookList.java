@@ -7,35 +7,38 @@ public class BookList {
 
 // Seznam knih přez linked list
 
-    final LinkedList<Book> books = new LinkedList<>();
-    final ArrayList<Book> deletedBooks = new ArrayList<>();
+   private final LinkedList<Book> books = new LinkedList<>();
+   private final ArrayList<Book> deletedBooks = new ArrayList<>();
 
-    public void addBook(Book book){
+    public void addBook(Book book) {
         books.add(book);
     }
 
-    public void removeBook(int id){
-       //přesun vymazané knihy do vymazaných
+    public void removeBook(int id) {
+        //přesun vymazané knihy do vymazaných
         for (Book b : books) {
             if (b.getId() == id) {
-                deletedBooks.add(new Book(b.getId(), b.getTitle(), b.getAutor()));
+                deletedBooks.add(b);
                 break;
             }
         }
         books.removeIf(b -> b.getId() == id);
     }
-// Výpis knih
+
+    // Výpis knih
     public void listBooks() {
         for (Book b : books) {
             System.out.println(b);
         }
     }
-// Výpis vymazaných knih
+
+    // Výpis vymazaných knih
     public void listDeletedBooks() {
         for (Book b : deletedBooks) {
             System.out.println(b);
         }
     }
+
     public Book findBook(int id) {
         for (Book b : books) {
             if (b.getId() == id) {
@@ -44,12 +47,9 @@ public class BookList {
         }
         return null;
     }
-    public void printBooks() {
-        for (Book b : books) {
-            System.out.println(b);
-        }
-    }
+
 }
+
 
 
 
