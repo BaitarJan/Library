@@ -1,29 +1,36 @@
 package Library;
 
-public class Price extends Book {
+public class Price {
 
-    private final double basePrice; // cena nové knihy
-    private final Damage damage;    // procento poškození knihy
-    private final double borrowPercent; // procento z ceny za půjčení
+    private final double basePrice;
+    private final int damagePercent;
+    private final double borrowPercent;
 
-    public Price(Book book, double basePrice, Damage damage, double borrowPercent) {
-        super(book.getId(), book.getTitle(), book.getAutor());
-        this.basePrice = basePrice;
-        this.damage = damage;
+    public Price(Book book, double borrowPercent) {
+        this.basePrice = book.getBasePrice();
+        this.damagePercent = book.getDamagePercent();
         this.borrowPercent = borrowPercent;
     }
 
     public double calculatePrice() {
-        double price = basePrice * (borrowPercent / 100.0); // cena půjčení
+        double price = basePrice * (borrowPercent / 100.0);
+        price *= (100 - damagePercent) / 100.0;
+        return price;
+    }
 
-        // odečteme procento poškození
-        price *= (100 - damage.getTotalDamage()) / 100.0;
+    // 🔥 NOVÁ VERZE SE ZPOŽDĚNÍM
+    public double calculatePrice(long daysRemaining) {
+        double price = calculatePrice();
+
+        if (daysRemaining < 0) {
+            price *= 1.25; // +25 % pokuta
+        }
 
         return price;
     }
 
     @Override
     public String toString() {
-        return super.toString() + " | Půjčovací cena: " + String.format("%.2f", calculatePrice()) + " Kč";
+        return String.format("Půjčovací cena: %.2f Kč", calculatePrice());
     }
 }

@@ -25,6 +25,10 @@ public class BookList {
         books.removeIf(b -> b.getId() == id);
     }
 
+
+
+
+
     // Výpis knih
     public void listBooks() {
         for (Book b : books) {
